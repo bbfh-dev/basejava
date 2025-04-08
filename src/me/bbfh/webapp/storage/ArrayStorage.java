@@ -19,15 +19,13 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        String uuid = resume.getUUID();
-        for (int i = 0; i < this.size(); i++) {
-            if (Objects.equals(this.storage[i].getUUID(), uuid)) {
-                this.storage[i] = resume;
-                return;
-            }
+        int index = this.find(resume.getUUID());
+        if (index == -1) {
+            System.err.printf("Trying to update() a resume `%s`, but it's not present in storage\n", resume);
+            return;
         }
 
-        System.err.printf("Trying to update() a resume `%s`, but it's not present in storage\n", resume);
+        this.storage[index] = resume;
     }
 
     public void save(Resume resume) {
@@ -43,28 +41,25 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < this.size(); i++) {
-            if (Objects.equals(this.storage[i].getUUID(), uuid)) {
-                return this.storage[i];
-            }
+        int index = this.find(uuid);
+        if (index == -1) {
+            return null;
         }
-
-        return null;
+        return this.storage[index];
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < this.size(); i++) {
-            if (Objects.equals(this.storage[i].getUUID(), uuid)) {
-                for (; i < this.size() - 1; i++) {
-                    this.storage[i] = this.storage[i + 1];
-                }
-                this.storage[this.size() - 1] = null;
-                this.size--;
-                return;
-            }
+        int i = this.find(uuid);
+        if (i == -1) {
+            System.err.printf("Trying to delete() a resume with uuid `%s`, but it's not present in storage\n", uuid);
+            return;
         }
 
-        System.err.printf("Trying to delete() a resume with uuid `%s`, but it's not present in storage\n", uuid);
+        for (; i < this.size() - 1; i++) {
+            this.storage[i] = this.storage[i + 1];
+        }
+        this.storage[this.size() - 1] = null;
+        this.size--;
     }
 
     /**
@@ -80,5 +75,15 @@ public class ArrayStorage {
 
     public int size() {
         return this.size;
+    }
+
+    private int find(String uuid) {
+        for (int i = 0; i < this.size(); i++) {
+            if (Objects.equals(this.storage[i].getUUID(), uuid)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
