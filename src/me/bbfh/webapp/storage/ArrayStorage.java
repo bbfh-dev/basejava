@@ -33,21 +33,18 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        if (this.size == 0) {
-            return;
-        }
-
         for (int i = 0; i < this.size(); i++) {
             if (Objects.equals(this.storage[i].getUUID(), uuid)) {
                 for (; i < this.size() - 1; i++) {
                     this.storage[i] = this.storage[i + 1];
                 }
                 this.storage[this.size() - 1] = null;
-                break;
+                this.size--;
+                return;
             }
         }
 
-        this.size--;
+        System.err.printf("Trying to delete() a resume with uuid `%s`, but it's not present in storage\n", uuid);
     }
 
     /**
