@@ -33,7 +33,20 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        size--;
+        if (this.size == 0) {
+            return;
+        }
+
+        for (int i = 0; i < this.size(); i++) {
+            if (Objects.equals(this.storage[i].uuid, uuid)) {
+                for (; i < this.size() - 1; i++) {
+                    this.storage[i] = this.storage[i + 1];
+                }
+                break;
+            }
+        }
+
+        this.size--;
     }
 
     /**
