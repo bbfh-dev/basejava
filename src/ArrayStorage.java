@@ -25,7 +25,11 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        return new Resume[0];
+        Resume[] all = new Resume[this.size()];
+        if (this.size() >= 0) {
+            System.arraycopy(this.storage, 0, all, 0, this.size());
+        }
+        return all;
     }
 
     int size() {
