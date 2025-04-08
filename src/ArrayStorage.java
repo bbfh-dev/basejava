@@ -9,8 +9,8 @@ public class ArrayStorage {
         size = 0;
     }
 
-    void save(Resume r) {
-        size++;
+    void save(Resume resume) {
+        this.storage[this.size++] = resume;
     }
 
     Resume get(String uuid) {
