@@ -8,7 +8,14 @@ public class ArrayStorage {
     private int size = 0;
 
     void clear() {
-        size = 0;
+        // "6. В методе clear() обнуление массива предполагает обнуление (null) ячеек, где хранятся Resume,
+        // а не создание нового или присваивание ему null"
+        //
+        // Однако `size = 0;` было бы достаточно чтобы получить искомый результат и улучшить производительность.
+        for (int i = 0; i < this.size(); i++) {
+            this.storage[i] = null;
+        }
+        this.size = 0;
     }
 
     void save(Resume resume) {
