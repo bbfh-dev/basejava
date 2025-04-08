@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * Array based storage for Resumes
  */
@@ -14,6 +16,12 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
+        for (int i = 0; i < this.size(); i++) {
+            if (Objects.equals(this.storage[i].uuid, uuid)) {
+                return this.storage[i];
+            }
+        }
+
         return null;
     }
 
