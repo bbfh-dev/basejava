@@ -19,6 +19,14 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
+        if (this.size == capacity) {
+            System.err.printf("Trying to save() a resume `%s`, but the storage is at its full capacity %d\n", resume, this.capacity);
+            return;
+        }
+        if (this.get(resume.getUUID()) != null) {
+            System.err.printf("Trying to save() a resume `%s` which is already present. Use update() instead!\n", resume);
+            return;
+        }
         this.storage[this.size++] = resume;
     }
 
