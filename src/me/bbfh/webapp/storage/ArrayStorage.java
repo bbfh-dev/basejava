@@ -2,6 +2,7 @@ package me.bbfh.webapp.storage;
 
 import me.bbfh.webapp.model.Resume;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -12,13 +13,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        // "6. В методе clear() обнуление массива предполагает обнуление (null) ячеек, где хранятся me.bbfh.webapp.model.Resume,
-        // а не создание нового или присваивание ему null"
-        //
-        // Однако `size = 0;` было бы достаточно чтобы получить искомый результат и улучшить производительность.
-        for (int i = 0; i < this.size(); i++) {
-            this.storage[i] = null;
-        }
+        Arrays.fill(this.storage, 0, this.size(), null);
         this.size = 0;
     }
 
