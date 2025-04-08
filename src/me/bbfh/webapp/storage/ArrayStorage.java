@@ -18,6 +18,18 @@ public class ArrayStorage {
         this.size = 0;
     }
 
+    public void update(Resume resume) {
+        String uuid = resume.getUUID();
+        for (int i = 0; i < this.size(); i++) {
+            if (Objects.equals(this.storage[i].getUUID(), uuid)) {
+                this.storage[i] = resume;
+                return;
+            }
+        }
+
+        System.err.printf("Trying to update() a resume `%s`, but it's not present in storage\n", resume);
+    }
+
     public void save(Resume resume) {
         if (this.size == capacity) {
             System.err.printf("Trying to save() a resume `%s`, but the storage is at its full capacity %d\n", resume, this.capacity);
