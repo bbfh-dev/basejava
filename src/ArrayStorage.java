@@ -42,6 +42,7 @@ public class ArrayStorage {
                 for (; i < this.size() - 1; i++) {
                     this.storage[i] = this.storage[i + 1];
                 }
+                this.storage[this.size() - 1] = null;
                 break;
             }
         }
