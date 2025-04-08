@@ -1,3 +1,7 @@
+package me.bbfh.webapp.storage;
+
+import me.bbfh.webapp.model.Resume;
+
 import java.util.Objects;
 
 /**
@@ -7,8 +11,8 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
     private int size = 0;
 
-    void clear() {
-        // "6. В методе clear() обнуление массива предполагает обнуление (null) ячеек, где хранятся Resume,
+    public void clear() {
+        // "6. В методе clear() обнуление массива предполагает обнуление (null) ячеек, где хранятся me.bbfh.webapp.model.Resume,
         // а не создание нового или присваивание ему null"
         //
         // Однако `size = 0;` было бы достаточно чтобы получить искомый результат и улучшить производительность.
@@ -18,13 +22,13 @@ public class ArrayStorage {
         this.size = 0;
     }
 
-    void save(Resume resume) {
+    public void save(Resume resume) {
         this.storage[this.size++] = resume;
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         for (int i = 0; i < this.size(); i++) {
-            if (Objects.equals(this.storage[i].uuid, uuid)) {
+            if (Objects.equals(this.storage[i].getUUID(), uuid)) {
                 return this.storage[i];
             }
         }
@@ -32,13 +36,13 @@ public class ArrayStorage {
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         if (this.size == 0) {
             return;
         }
 
         for (int i = 0; i < this.size(); i++) {
-            if (Objects.equals(this.storage[i].uuid, uuid)) {
+            if (Objects.equals(this.storage[i].getUUID(), uuid)) {
                 for (; i < this.size() - 1; i++) {
                     this.storage[i] = this.storage[i + 1];
                 }
@@ -53,7 +57,7 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         Resume[] all = new Resume[this.size()];
         if (this.size() >= 0) {
             System.arraycopy(this.storage, 0, all, 0, this.size());
@@ -61,7 +65,7 @@ public class ArrayStorage {
         return all;
     }
 
-    int size() {
+    public int size() {
         return this.size;
     }
 }
