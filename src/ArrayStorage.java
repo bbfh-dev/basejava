@@ -3,11 +3,14 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    int size = 0;
 
     void clear() {
+        size = 0;
     }
 
     void save(Resume r) {
+        size++;
     }
 
     Resume get(String uuid) {
@@ -15,6 +18,7 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
+        size--;
     }
 
     /**
@@ -25,6 +29,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        return 0;
+        return this.size;
     }
 }
