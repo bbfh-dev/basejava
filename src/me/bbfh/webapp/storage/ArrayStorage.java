@@ -10,7 +10,7 @@ import java.util.Objects;
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void insertElement(Resume resume, int index) {
-        this.storage[this.size++] = resume;
+        this.storage[this.size] = resume;
     }
 
     @Override
