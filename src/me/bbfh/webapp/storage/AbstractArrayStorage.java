@@ -24,6 +24,19 @@ public abstract class AbstractArrayStorage implements Storage {
         this.storage[index] = resume;
     }
 
+    public void save(Resume resume) {
+        if (this.size == this.CAPACITY) {
+            System.err.printf("Trying to save() a resume `%s`, but the storage is at its full capacity %d\n", resume, this.CAPACITY);
+            return;
+        }
+        int index = this.find(resume.getUUID());
+        if (index >= 0) {
+            System.err.printf("Trying to save() a resume `%s` which is already present. Use update() instead!\n", resume);
+            return;
+        }
+        this.insertElement(resume, index);
+    }
+
     public void delete(String uuid) {
         int i = this.find(uuid);
         if (i == -1) {
@@ -58,4 +71,6 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     protected abstract int find(String uuid);
+
+    protected abstract void insertElement(Resume resume, int index);
 }

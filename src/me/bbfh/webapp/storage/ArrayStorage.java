@@ -9,15 +9,7 @@ import java.util.Objects;
  */
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    public void save(Resume resume) {
-        if (this.size == this.CAPACITY) {
-            System.err.printf("Trying to save() a resume `%s`, but the storage is at its full capacity %d\n", resume, this.CAPACITY);
-            return;
-        }
-        if (this.get(resume.getUUID()) != null) {
-            System.err.printf("Trying to save() a resume `%s` which is already present. Use update() instead!\n", resume);
-            return;
-        }
+    protected void insertElement(Resume resume, int index) {
         this.storage[this.size++] = resume;
     }
 
