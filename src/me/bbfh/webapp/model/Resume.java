@@ -3,7 +3,7 @@ package me.bbfh.webapp.model;
 /**
  * Initial resume class
  */
-public class Resume {
+public class Resume implements Comparable<Resume> {
     // Unique identifier
     private String uuid;
 
@@ -18,5 +18,10 @@ public class Resume {
 
     public void setUUID(String uuid) {
         this.uuid = uuid;
+    }
+
+    @Override
+    public int compareTo(Resume resume) {
+        return this.uuid.compareTo(resume.uuid);
     }
 }
