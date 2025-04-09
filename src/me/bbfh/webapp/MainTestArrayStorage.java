@@ -2,12 +2,13 @@ package me.bbfh.webapp;
 
 import me.bbfh.webapp.model.Resume;
 import me.bbfh.webapp.storage.ArrayStorage;
+import me.bbfh.webapp.storage.Storage;
 
 /**
  * Test for your ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
