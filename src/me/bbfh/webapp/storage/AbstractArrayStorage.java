@@ -64,7 +64,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = this.find(uuid);
-        if (index == -1) {
+        if (index < 0) {
             return null;
         }
         return this.storage[index];
