@@ -1,5 +1,8 @@
 package me.bbfh.webapp.storage;
 
+import me.bbfh.webapp.exception.ResumeAlreadyExistsException;
+import me.bbfh.webapp.exception.ResumeNotFoundException;
+import me.bbfh.webapp.exception.StorageOutOfSpaceException;
 import me.bbfh.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,6 +39,11 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(newResume, storage.get(UUID_2));
     }
 
+    @Test(expected = ResumeNotFoundException.class)
+    public void updateNotFound() throws Exception {
+        storage.update(new Resume("UUID_UNKNOWN"));
+    }
+
     @Test
     public void save() throws Exception {
         String uuid = UUID.randomUUID().toString();
@@ -43,10 +51,27 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(uuid, storage.get(uuid).getUUID());
     }
 
+    @Test(expected = StorageOutOfSpaceException.class)
+    public void saveOutOfSpace() throws Exception {
+        for (int i = 0; i < 10_001; i++) {
+            storage.save(new Resume());
+        }
+    }
+
+    @Test(expected = ResumeAlreadyExistsException.class)
+    public void saveAlreadyExists() throws Exception {
+        storage.save(new Resume(UUID_1));
+    }
+
     @Test
     public void delete() throws Exception {
         storage.delete(UUID_2);
         Assert.assertNull(storage.get(UUID_2));
+    }
+
+    @Test(expected = ResumeNotFoundException.class)
+    public void deleteNotFound() throws Exception {
+        storage.delete("UUID_UNKNOWN");
     }
 
     @Test
