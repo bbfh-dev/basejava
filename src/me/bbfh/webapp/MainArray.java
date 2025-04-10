@@ -1,5 +1,6 @@
 package me.bbfh.webapp;
 
+import me.bbfh.webapp.exception.AbstractException;
 import me.bbfh.webapp.model.Resume;
 import me.bbfh.webapp.storage.SortedArrayStorage;
 import me.bbfh.webapp.storage.Storage;
@@ -29,6 +30,7 @@ public class MainArray {
             if (params.length == 2) {
                 uuid = params[1].intern();
             }
+
             switch (params[0]) {
                 case "list":
                     printAll();
@@ -39,11 +41,19 @@ public class MainArray {
                 case "save":
                     r = new Resume();
                     r.setUUID(uuid);
-                    ARRAY_STORAGE.save(r);
+                    try {
+                        ARRAY_STORAGE.save(r);
+                    } catch (AbstractException e) {
+                        System.err.printf("ERROR: %s\n", e.getHumanReadableError());
+                    }
                     printAll();
                     break;
                 case "delete":
-                    ARRAY_STORAGE.delete(uuid);
+                    try {
+                        ARRAY_STORAGE.delete(uuid);
+                    } catch (AbstractException e) {
+                        System.err.printf("ERROR: %s\n", e.getHumanReadableError());
+                    }
                     printAll();
                     break;
                 case "get":
@@ -59,6 +69,7 @@ public class MainArray {
                     System.out.println("Неверная команда.");
                     break;
             }
+
         }
     }
 

@@ -1,5 +1,6 @@
 package me.bbfh.webapp;
 
+import me.bbfh.webapp.exception.AbstractException;
 import me.bbfh.webapp.model.Resume;
 import me.bbfh.webapp.storage.ArrayStorage;
 import me.bbfh.webapp.storage.Storage;
@@ -10,7 +11,7 @@ import me.bbfh.webapp.storage.Storage;
 public class MainTestArrayStorage {
     static final Storage ARRAY_STORAGE = new ArrayStorage();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AbstractException {
         Resume r1 = new Resume();
         r1.setUUID("uuid1");
         Resume r2 = new Resume();

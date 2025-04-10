@@ -1,5 +1,8 @@
 package me.bbfh.webapp.storage;
 
+import me.bbfh.webapp.exception.ResumeAlreadyExistsException;
+import me.bbfh.webapp.exception.ResumeNotFoundException;
+import me.bbfh.webapp.exception.StorageOutOfSpaceException;
 import me.bbfh.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -14,35 +17,31 @@ public abstract class AbstractArrayStorage implements Storage {
         this.size = 0;
     }
 
-    public void update(Resume resume) {
+    public void update(Resume resume) throws ResumeNotFoundException {
         int index = this.find(resume.getUUID());
         if (index == -1) {
-            System.err.printf("Trying to update() a resume `%s`, but it's not present in storage\n", resume);
-            return;
+            throw new ResumeNotFoundException(resume.getUUID());
         }
 
         this.storage[index] = resume;
     }
 
-    public void save(Resume resume) {
+    public void save(Resume resume) throws StorageOutOfSpaceException, ResumeAlreadyExistsException {
         if (this.size == this.CAPACITY) {
-            System.err.printf("Trying to save() a resume `%s`, but the storage is at its full capacity %d\n", resume, this.CAPACITY);
-            return;
+            throw new StorageOutOfSpaceException(resume, this.CAPACITY);
         }
         int index = this.find(resume.getUUID());
         if (index >= 0) {
-            System.err.printf("Trying to save() a resume `%s` which is already present. Use update() instead!\n", resume);
-            return;
+            throw new ResumeAlreadyExistsException(resume);
         }
         this.insertElement(resume, index);
         this.size++;
     }
 
-    public void delete(String uuid) {
+    public void delete(String uuid) throws ResumeNotFoundException {
         int i = this.find(uuid);
-        if (i == -1) {
-            System.err.printf("Trying to delete() a resume with uuid `%s`, but it's not present in storage\n", uuid);
-            return;
+        if (i < 0) {
+            throw new ResumeNotFoundException(uuid);
         }
 
         for (; i < this.size - 1; i++) {
