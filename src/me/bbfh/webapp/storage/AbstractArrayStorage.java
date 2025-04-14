@@ -7,8 +7,7 @@ import me.bbfh.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
-    protected int size = 0;
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final int CAPACITY = 10_000;
     protected final Resume[] storage = new Resume[CAPACITY];
 
@@ -56,10 +55,6 @@ public abstract class AbstractArrayStorage implements Storage {
      */
     public Resume[] getAll() {
         return Arrays.copyOfRange(this.storage, 0, this.size);
-    }
-
-    public int size() {
-        return this.size;
     }
 
     public Resume get(String uuid) {
